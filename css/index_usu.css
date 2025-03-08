@@ -1,0 +1,198 @@
+* {
+    color: #ffff;
+    font-family: 'Pixelify Sans', cursive;
+}
+
+
+body {
+    background: url("../img/login2.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    /* Oculta la scrollbar */
+    overflow: hidden;
+    height: 100vh;
+    /* display: flex; */
+    /* justify-content: center; */
+    /* margin-top: 50px; */
+}
+
+.perfil {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    background: black;
+    padding: 10px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    border-radius: 5px;
+    width: 200px;
+}
+
+.perfil img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.perfil h2 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.perfil p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.perfil span {
+    color: yellow;
+    font-weight: bold;
+}
+
+.personaje {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 110vh;
+}
+
+.personaje img {
+    width: 250px;
+}
+
+
+/* Ubicación corregida: Abajo a la derecha */
+
+.opciones {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.contenedor-opciones {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 15px;
+    border-radius: 10px;
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/* Contenedor con avatar y mundo alineados */
+
+.fila {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 8px 0;
+}
+
+.opcion {
+    text-align: center;
+    width: 50%;
+}
+
+.opcion p {
+    font-size: 12px;
+    color: #bbb;
+    margin-bottom: 5px;
+}
+
+.opcion img {
+    width: 45px;
+    height: 45px;
+    border-radius: 5px;
+}
+
+.opcion span {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+
+/* Línea vertical entre Avatar y Mundo */
+
+.linea-vertical {
+    width: 2px;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+
+/* Línea horizontal entre opciones y botón */
+
+.linea-horizontal {
+    width: 100%;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.5);
+    margin: 8px 0;
+}
+
+
+/* Botón de jugar alineado correctamente */
+
+.boton-jugar {
+    background: yellow;
+    color: #ffff;
+    font-size: 18px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+    margin-top: 8px;
+}
+
+
+/* Seccion para cerrar sesion */
+
+.salir {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.cerrar-sesion {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 15px;
+    border-radius: 10px;
+    width: 25vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.boton-salir {
+    background: red;
+    color: #ffff;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+}
+
+
+/* Fin cerrar sesion */
+
+
+a {
+    text-decoration: none !important;
+}

@@ -1,0 +1,342 @@
+* {
+    color: #ffff;
+    font-family: 'Pixelify Sans', cursive;
+}
+
+body {
+    background: url("../img/login2.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    /* Oculta la scrollbar */
+    overflow: hidden;
+    height: 100vh;
+    /* display: flex; */
+    /* justify-content: center; */
+    /* margin-top: 50px; */
+}
+
+.perfil {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    background: black;
+    padding: 10px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    border-radius: 5px;
+    width: 200px;
+}
+
+.perfil img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.perfil h2 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.perfil p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.perfil span {
+    color: yellow;
+    font-weight: bold;
+}
+
+.personaje {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 110vh;
+}
+
+.personaje img {
+    width: 250px;
+}
+
+
+/* Ubicación corregida: Abajo a la derecha */
+
+.opciones {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.contenedor-opciones {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 15px;
+    border-radius: 10px;
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/* Contenedor con avatar y mundo alineados */
+
+.fila {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 8px 0;
+}
+
+.opcion {
+    text-align: center;
+    width: 50%;
+}
+
+.opcion p {
+    font-size: 12px;
+    color: #bbb;
+    margin-bottom: 5px;
+}
+
+.opcion img {
+    width: 45px;
+    height: 45px;
+    border-radius: 5px;
+}
+
+.opcion span {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+
+/* Línea vertical entre Avatar y Mundo */
+
+.linea-vertical {
+    width: 2px;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+
+/* Línea horizontal entre opciones y botón */
+
+.linea-horizontal {
+    width: 100%;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.5);
+    margin: 8px 0;
+}
+
+
+/* Botón de jugar alineado correctamente */
+
+.boton-jugar {
+    background: yellow;
+    color: #ffff;
+    font-size: 18px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+    margin-top: 8px;
+}
+
+
+/* Seccion para cerrar sesion */
+
+.salir {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.cerrar-sesion {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 15px;
+    border-radius: 10px;
+    width: 25vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.boton-salir {
+    background: red;
+    color: #ffff;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+}
+
+
+/* Fin cerrar sesion */
+
+
+/* video */
+
+video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.capa {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #1c1c1c1d;
+    opacity: 0.5;
+    mix-blend-mode: overlay;
+}
+
+
+/* fin video */
+
+h1 {
+    font-size: 50px;
+}
+
+h2 {
+    margin-top: -30px;
+}
+
+
+/* SECCION DE LA CAJA DEL LOGIN */
+
+.login {
+    width: 60vh;
+    height: 50vh;
+    padding: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    background: transparent;
+    color: #fff;
+    border-radius: 5%;
+    border: 2px solid rgba(255, 255, 255, .2);
+    backdrop-filter: blur(8px);
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-height: 85vh;
+    position: relative;
+    z-index: 3;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+.cajita {
+    position: relative;
+    height: 100vh;
+    z-index: 2;
+}
+
+input {
+    width: 80%;
+    margin: 5px;
+    padding: 15px;
+    border: none;
+    border-radius: 20px;
+    text-align: center;
+    margin: 15px;
+    color: black;
+}
+
+.btn-submit {
+    background-color: #081a38;
+    width: 50%;
+    margin-top: 5px;
+    color: aliceblue;
+}
+
+
+/* FIN SECCION DE LA CAJA DEL LOGIN */
+
+
+/* FIN AÑADIDO DE KAHO70 */
+
+
+/* SECCION RESPONSIVE */
+
+@media (max-width: 360px) {
+    .login {
+        width: 95%;
+        padding: 15px;
+    }
+    h1 {
+        font-size: 22px;
+    }
+    input,
+    .btn-submit {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .login {
+        width: 90%;
+    }
+    h1 {
+        font-size: 24px;
+    }
+    input {
+        font-size: 16px;
+    }
+    .btn-submit {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .login {
+        max-width: 80%;
+    }
+}
+
+@media (max-width: 1024px) {
+    .login {
+        max-width: 60%;
+    }
+}
+
+@media (max-width: 1440px) {
+    .login {
+        max-width: 50%;
+    }
+}
+
+@media (min-width: 1441px) {
+    .login {
+        max-width: 35%;
+    }
+}
+
+
+/* FIN SECCION RESPONSIVE */
