@@ -50,57 +50,62 @@ if ($ya_esta == 0) {
         let tiempoRestante = null;
         let contadorActivo = false;
         let intervalo = null;
-
-        function actualizarListaJugadores() {
-            fetch("verificar_jugadores.php?id_sala=<?php echo $id_sala; ?>")
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById("lista-jugadores").innerHTML = data.jugadores.map(j => `<li>${j}</li>`).join("");
-        if (data.total >= 2 && data.segundos_restantes !== null) {
-            if (!contadorActivo) {
-                tiempoRestante = data.segundos_restantes;
-                iniciarCuentaRegresiva();
-            }
-        } else {
-            document.getElementById("contador").textContent = "Esperando jugadores...";
-            contadorActivo = false;
-            clearInterval(intervalo);
-        }
-        // Descomenta esta parte
-        if (data.redirigir) {
-            window.location.href = "batalla.php?id_sala=<?php echo $id_sala; ?>";
-        }
-        setTimeout(actualizarListaJugadores, 2000);
-    })
-    .catch(error => console.error("Error en actualización de jugadores:", error));
-}
-
-function iniciarCuentaRegresiva() {
-    contadorActivo = true;
-    let contadorElemento = document.getElementById("contador");
-
-    if (intervalo) clearInterval(intervalo);
-
-    intervalo = setInterval(() => {
-        console.log("Tiempo restante:", tiempoRestante);
-        if (tiempoRestante <= 0) {
-            clearInterval(intervalo);
-            console.log("Contador llegó a 0, actualizando estado..."); 
+        
+        async function actualizarListaJugadores() {
+            try {
+                const response = await fetch("verificar_jugadores.php?id_sala=<?php echo $id_sala; ?>");
+                const data = await response.json();
+                
+                const listaJugadores = document.getElementById("lista-jugadores");
+                listaJugadores.innerHTML = data.jugadores.map(j => `<li>${j}</li>`).join("");
             
-                        window.location.href = "batalla.php?id_sala=<?php echo $id_sala; ?>";
-                  
-        } else {
-            contadorElemento.textContent = "La batalla inicia en: " + tiempoRestante + "s";
-            tiempoRestante--;
+                if (data.total >= 2) {
+                    if (!contadorActivo) {
+                        tiempoRestante = 20; // 10 segundos de espera
+                        iniciarCuentaRegresiva();
+                    }
+                } else {
+                    document.getElementById("contador").textContent = "Esperando jugadores...";
+                    contadorActivo = false;
+                    if (intervalo) clearInterval(intervalo);
+                }
+            
+                if (data.redirigir) {
+                    window.location.href = "batalla.php?id_sala=<?php echo $id_sala; ?>";
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
+            
+            setTimeout(actualizarListaJugadores, 1000);
         }
-    }, 1000);
-}
-
-        function eliminarUsuario() {
-            fetch("eliminar_usuario.php?id_sala=<?php echo $id_sala; ?>", { method: "GET" });
+    
+        function iniciarCuentaRegresiva() {
+            contadorActivo = true;
+            const contadorElemento = document.getElementById("contador");
+        
+            if (intervalo) clearInterval(intervalo);
+        
+            intervalo = setInterval(() => {
+                if (tiempoRestante <= 0) {
+                    clearInterval(intervalo);
+                    window.location.href = "batalla.php?id_sala=<?php echo $id_sala; ?>";
+                } else {
+                    contadorElemento.textContent = `La batalla inicia en: ${tiempoRestante}s`;
+                    tiempoRestante--;
+                }
+            }, 1000);
         }
-
-        window.addEventListener("beforeunload", eliminarUsuario);
+    
+        window.addEventListener("beforeunload", () => {
+            fetch("eliminar_usuario.php?id_sala=<?php echo $id_sala; ?>", { 
+                method: "GET",
+                //keepalive hace que el fetch siga ejecutandose asi el usuario cierre la pagina o navegue en otro lado
+                keepalive: true 
+            });
+        });
+    
+        // Iniciar la actualización cuando carga la página
         actualizarListaJugadores();
     </script>
 </body>

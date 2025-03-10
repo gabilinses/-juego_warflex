@@ -1,11 +1,7 @@
 <?php
 
 include ('header.php');
-require_once('../../database/conexion.php');
-include '../../includes/session_start.php';
-$conex = new Database;
-$con = $conex->conectar();
-include '../../includes/validarSesion.php';
+
 ?>
 
 
@@ -38,11 +34,9 @@ include '../../includes/validarSesion.php';
         }
 
         .caja img {
-            width: 100%; 
-            height: 225px;
-            margin-left: 30px;
-            object-fit: cover; 
-            border-radius: 10px 10px 0 0;
+            width: 150px;
+            height: 150px;
+            margin-bottom: 20px;
         }
 
         .caja h3 {
@@ -62,19 +56,19 @@ include '../../includes/validarSesion.php';
     <div class="container-cajas">
         <!-- Caja de Armas -->
         <div class="caja" onclick="window.location.href='up_armas.php'">
-            <img src="../../img/arma.webp" alt="Armas">
+            <img src="ruta/a/imagen_armas.png" alt="Armas">
             <h3>Armas</h3>
         </div>
 
         <!-- Caja de Avatares -->
         <div class="caja" onclick="window.location.href='up_avatares.php'">
-            <img src="../../img/body.png" alt="Avatares">
+            <img src="ruta/a/imagen_avatares.png" alt="Avatares">
             <h3>Avatares</h3>
         </div>
 
         <!-- Caja de Mundos -->
         <div class="caja" onclick="window.location.href='up_mundos.php'">
-            <img src="../../img/mapa.png" alt="Mundos">
+            <img src="ruta/a/imagen_mundos.png" alt="Mundos">
             <h3>Mundos</h3>
         </div>
     </div>

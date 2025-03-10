@@ -7,7 +7,14 @@ session_start();
 $username = $_SESSION['username'];
 $mundo = $_SESSION['Id_mundo'];
 // Verificar si hay salas con estado 3 o 4
-$sql_salas = $con->prepare("SELECT s.Id_sala, s.Id_mundo, s.Id_estado, (SELECT COUNT(*) FROM detalle_sala ds WHERE ds.id_sala = s.Id_sala) AS num_jugadores FROM sala s WHERE Id_mundo = $mundo AND Id_estado IN (3,4) LIMIT 2");
+$sql_limpiar = $con->prepare("
+    DELETE ds FROM detalle_sala ds 
+    LEFT JOIN sala s ON ds.id_sala = s.Id_sala 
+    WHERE s.Id_sala IS NULL
+");
+$sql_limpiar->execute();
+
+$sql_salas = $con->prepare("SELECT s.Id_sala, s.Id_mundo, s.Id_estado, (SELECT COUNT(*) FROM detalle_sala ds WHERE ds.id_sala = s.Id_sala) AS num_jugadores FROM sala s WHERE Id_mundo = $mundo AND Id_estado IN (3,4,5) LIMIT 2");
 $sql_salas->execute();
 $salas = $sql_salas->fetchAll(PDO::FETCH_ASSOC);
 
@@ -39,10 +46,12 @@ if (count($salas) < 2) {
                 <h2 class="tit_sala">Sala <?php echo ($index + 1); ?></h2>
                 <p class="jugadores">Jugadores <span id="jugadores<?php echo $sala['Id_sala']; ?>"><?php echo $sala['num_jugadores']; ?></span>/5</p>
                 <?php if ($sala['Id_estado'] == 3){ ?>
-                    <p class="ocupado">Batalla en curso. No puedes unirte.</p>
-                <?php }else{ ?>
+                    <p class="ocupado">Sala llena, no puedes unirte.</p>
+                <?php } elseif ($sala['Id_estado'] == 5){ ?>
+                    <p class="ocupado">Sala en juego, no puedes unirte.</p>
+                <?php } else { ?>
                     <button class="btn" data-id="<?php echo $sala['Id_sala']; ?>" onclick="unirseASala(this)">UNIRSE</button>
-                <?php }; ?>
+                <?php } ?>
             </div>
         <?php }; ?>
     </div>
@@ -53,6 +62,23 @@ if (count($salas) < 2) {
 </a>
 
 <script>
+
+    async function actualizarSalas() {
+        try {
+            const response = await fetch(window.location.href);
+            const html = await response.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const newSalas = doc.getElementById('salas');
+            document.getElementById('salas').innerHTML = newSalas.innerHTML;
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    // Ejecutar la actualización cada 2 segundos
+    setInterval(actualizarSalas, 2000);
+    
     function unirseASala(button) {
         const id_sala = button.getAttribute('data-id');
 

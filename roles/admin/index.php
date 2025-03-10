@@ -2,11 +2,9 @@
 
 
 require_once('../../database/conexion.php');
-include '../../includes/session_start.php';
 $conex = new Database;
 $con = $conex->conectar();
-include '../../includes/validarSesion.php';
-
+include '../../includes/session_start.php';
 
 
 

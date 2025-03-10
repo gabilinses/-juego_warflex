@@ -26,15 +26,20 @@ $sqlVerificar = $con->prepare("
 $sqlVerificar->execute([$username, $id_sala]);
 $resultado = $sqlVerificar->fetch(PDO::FETCH_ASSOC);
 
-$sqlUpdateEstado = $con->prepare("UPDATE sala SET Id_estado = 4 WHERE id_sala = ?");
+$sqlUpdateEstado = $con->prepare("UPDATE sala SET Id_estado = 5 WHERE id_sala = ?");
 $sqlUpdateEstado->execute([$id_sala]);
     
 if ($id_sala) {
-    // Registrar la hora de inicio de la batalla si aún no está registrada
-    $hora_inicio = date("Y-m-d H:i:s");
-    $sql_update = $con->prepare("INSERT INTO estadistica (id_sala, username, fecha_ini ) VALUES (?, ?, ?)");
-    $sql_update->execute([$id_sala, $username, $hora_inicio]);
-
+    // Verificar si ya existe un registro
+    $sql_check = $con->prepare("SELECT COUNT(*) FROM estadistica WHERE id_sala = ? AND username = ? AND fecha_ini IS NOT NULL");
+    $sql_check->execute([$id_sala, $username]);
+    
+    if ($sql_check->fetchColumn() == 0) {
+        // Solo insertar si no existe
+        $hora_inicio = date("Y-m-d H:i:s");
+        $sql_update = $con->prepare("INSERT INTO estadistica (id_sala, username, fecha_ini) VALUES (?, ?, ?)");
+        $sql_update->execute([$id_sala, $username, $hora_inicio]);
+    }
 }
 
 // Obtener jugadores en la sala
@@ -72,6 +77,7 @@ $armas = $sql_armas->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Batalla</title>
+    <link rel="stylesheet" href="../../css/batalla.css">
 </head>
 <body>
     <h1>Batalla</h1>
@@ -108,26 +114,21 @@ $armas = $sql_armas->fetchAll(PDO::FETCH_ASSOC);
     
     <script>
         
-        function atacar(victima, arma, parte) {
+        async function atacar(victima, arma, parte) {
             if (!arma || !parte) {
                 alert('Selecciona un arma y una parte del cuerpo para atacar');
                 return;
             }
-            console.log('Datos del ataque:', {
-                atacante: '<?php echo $username; ?>',
-                victima: victima,
-                arma: arma,
-                parte: parte,
-                id_sala: '<?php echo $id_sala; ?>'
-            });
 
-            fetch('atacar.php?id_sala=<?php echo $id_sala; ?>', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: `atacante=<?php echo $username; ?>&victima=${victima}&arma=${arma}&parte=${parte}`
-            })
-            .then(response => response.json())
-            .then(data => {
+            try {
+                const response = await fetch('atacar.php?id_sala=<?php echo $id_sala; ?>', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `atacante=<?php echo $username; ?>&victima=${victima}&arma=${arma}&parte=${parte}`
+                });
+
+                const data = await response.json();
+
                 if (data.success) {
                     document.getElementById("vida_" + victima).innerText = data.nueva_vida;
                     if (data.nueva_vida <= 0) {
@@ -135,27 +136,55 @@ $armas = $sql_armas->fetchAll(PDO::FETCH_ASSOC);
                         if (victima === '<?php echo $username; ?>') {
                             alert("Has sido eliminado de la batalla");
                             window.location.href = "index.php";
-                        } else if (data.ultimo_jugador) {
-                            alert("¡Felicidades! Has ganado la batalla");
-                            window.location.href = "index.php";
                         }
-                    }
-                    if (data.redirect) {
-                        if (data.ganador === '<?php echo $username; ?>') {
-                            alert("¡Felicidades! Has ganado la batalla por mayor daño causado");
-                        } else {
-                            alert("La batalla ha terminado. El ganador es: " + data.ganador);
-                        }
-                        window.location.href = "index.php";
                     }
                 } else {
                     alert(data.message);
                 }
-            })
-            .catch(error => console.error("Error en el ataque:", error));
+            } catch(error) { console.error("Error en el ataque:", error);
+            }
         }
 
-        window.onload = actualizarContador;
+        async function verificarEstadoBatalla() {
+            try {
+                const response = await fetch('verificar_batalla.php?id_sala=<?php echo $id_sala; ?>', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `username=<?php echo $username; ?>`
+                });
+
+                const data = await response.json();
+                if (data.batalla_terminada) {
+                    if (data.ganador) {
+                        if (data.ganador === '<?php echo $username; ?>') {
+                            if (data.por_tiempo) {
+                                alert("¡Felicidades! Has ganado la batalla por mayor daño causado");
+                            } else if (data.por_eliminacion) {
+                                alert("¡Felicidades! Has ganado la batalla por eliminar a todos los jugadores");
+                            }
+                        } else {
+                            if (data.por_tiempo) {
+                                alert("La batalla ha terminado. El ganador es " + data.ganador + " por mayor daño causado");
+                            } else if (data.por_eliminacion) {
+                                alert("La batalla ha terminado. El ganador es " + data.ganador + " por eliminar a todos los jugadores");
+                            }
+                        }
+                    } else {
+                        alert("La batalla ha terminado sin ganador porque no hubo suficientes ataques");
+                    }
+                    window.location.href = "index.php";
+                }
+            } catch(error) {
+                console.error("Error al verificar estado:", error);
+            }
+        }
+
+        setInterval(verificarEstadoBatalla, 2000);
+
+        window.onload = function() {
+            verificarEstadoBatalla();
+        };
+    
     </script>
 </body>
 </html>

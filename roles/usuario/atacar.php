@@ -49,18 +49,29 @@ try{
     ");
     $sql_update_atacante->execute([$daño, $victima, $daño, $atacante]);
 
-    // Actualizar estadística
-    $sql_estadistica = $con->prepare("
-        UPDATE estadistica 
-        SET daño = daño + ?
+    // Registrar el ataque y actualizar el daño acumulado
+    // Primero obtener el daño acumulado
+    $sql_daño = $con->prepare("
+        SELECT COALESCE(SUM(daño), 0) 
+        FROM estadistica 
         WHERE id_sala = ? AND username = ?
     ");
-    $sql_estadistica->execute([$daño, $id_sala, $atacante]);
+    $sql_daño->execute([$id_sala, $atacante]);
+    $daño_acumulado = $sql_daño->fetchColumn();
 
+    // Luego registrar el nuevo ataque con solo el daño actual
+    $sql_registro = $con->prepare("
+        INSERT INTO estadistica (id_sala, username, usu_victima, Id_armas, parte_cuerpo, daño) 
+        VALUES (?, ?, ?, ?, ?, ?)
+    ");
+    $sql_registro->execute([$id_sala, $atacante, $victima, $id_arma, $parte_cuerpo, $daño]);
+
+   
     // Obtener vida actualizada
     $sql_vida = $con->prepare("SELECT vida FROM usuario WHERE username = ?");
     $sql_vida->execute([$victima]);
     $nueva_vida = $sql_vida->fetchColumn();
+
 
     // Eliminar jugador si murió
     if ($nueva_vida <= 0) {
@@ -70,62 +81,14 @@ try{
         // Regenerar vida del jugador eliminado
         $sql_regenerar = $con->prepare("UPDATE usuario SET vida = 100 WHERE username = ?");
         $sql_regenerar->execute([$victima]);
-
-        // Verificar jugadores restantes
-        $sql_check_players = $con->prepare("SELECT COUNT(*) FROM detalle_sala WHERE id_sala = ?");
-        $sql_check_players->execute([$id_sala]);
-        $jugadores_restantes = $sql_check_players->fetchColumn();
-
-        if ($jugadores_restantes <= 1) {
-            finalizarBatalla($con, $id_sala);
-        }
     }
-
-    // Verificar si el tiempo ha terminado
-    $sql_tiempo = $con->prepare("
-        SELECT TIMESTAMPDIFF(SECOND, fecha_ini, NOW()) >= 300 as tiempo_acabado
-        FROM estadistica 
-        WHERE id_sala = ? 
-        LIMIT 1
-    ");
-    $sql_tiempo->execute([$id_sala]);
-    $tiempo_acabado = $sql_tiempo->fetchColumn();
-
-    if ($tiempo_acabado) {
-        finalizarBatalla($con, $id_sala);
-    }
-
-    // Función para finalizar la batalla
-    function finalizarBatalla($con, $id_sala) {
-        // Actualizar estado de la sala
-        $sql_update_sala = $con->prepare("UPDATE sala SET Id_estado = 6 WHERE Id_sala = ?");
-        $sql_update_sala->execute([$id_sala]);
-
-        // Registrar fecha de fin
-        $sql_update_fin = $con->prepare("
-            UPDATE estadistica 
-            SET fecha_fin = NOW() 
-            WHERE id_sala = ? AND fecha_fin IS NULL
-        ");
-        $sql_update_fin->execute([$id_sala]);
-    }
-
-    // Registrar el ataque
-    $sql_registro = $con->prepare("
-        INSERT INTO estadistica (id_sala, atacante, victima, id_arma, parte_cuerpo, daño) 
-        VALUES (?, ?, ?, ?, ?, ?)
-    ");
-    $sql_registro->execute([$id_sala, $atacante, $victima, $id_arma, $parte_cuerpo, $daño]);
-
+    
     echo json_encode([
         "success" => true,
         "nueva_vida" => $nueva_vida,
         "daño" => $daño,
         "parte" => $parte_cuerpo,
         "eliminado" => ($nueva_vida <= 0),
-        "tiempo_acabado" => $tiempo_acabado,
-        "ultimo_jugador" => isset($jugadores_restantes) && $jugadores_restantes === 1,
-        "redirect" => ($nueva_vida <= 0 || $tiempo_acabado) ? "index.php" : null
     ]);
 } catch (Exception $e) {
     echo json_encode([

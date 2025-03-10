@@ -6,7 +6,7 @@ class Database{
     private $hostname = "localhost";
     private $user = "root";
     private $passw = "";
-    private $bd = "warflex";
+    private $bd = "warflex_2";
     private $charset = "utf8";
 
     function conectar()

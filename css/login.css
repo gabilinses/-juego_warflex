@@ -6,7 +6,7 @@
 }
 
 body {
-    background: url("../img/login3.jpg");
+    background: url("../img/login2.jpg");
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -37,64 +37,8 @@ body {
     z-index: 3;
 }
 
-.login h1 {
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: #ffffff;
-}
-
-.login label {
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #ffffff;
-}
-
-.login input {
-    margin-bottom: 15px;
-    padding: 10px;
-    border: 1px solid #ffffff;
-    border-radius: 17px;
-    font-size: 16px;
-}
-
-.login .btn-submit {
-    margin-top: 30px;
-    background-color: #007bff;
-    color: white;
-    padding: 8px 18px;
-    border: none;
-    border-radius: 17px;
-    font-size: 16px;
-    cursor: pointer;
-    font-size: 14px;
-
-}
-
-.login .btn-submit:hover {
-    background-color: #0056b3;
-}
-
-.login p {
-    margin-top: 15px;
-    font-size: 14px;
-    color: #ffffff;
-}
-
-.login p a {
-    color: #007bff;
-    text-decoration: none;
-}
-
-.login p a:hover {
-    text-decoration: underline;
-}
-
-.select2-container .select2-selection--single {
-    height: 38px;
-    border-radius: 5px;
-    background: rgba(255, 255, 255, 0.1);
-    border: none;
-    color: #fff;
+a {
+    text-decoration: none !important;
 }
 
 .cajita {

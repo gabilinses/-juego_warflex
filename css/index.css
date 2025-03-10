@@ -4,7 +4,7 @@
 }
 
 body {
-    background: url("../img/login3.jpg");
+    background: url("../img/login2.jpg");
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -159,17 +159,17 @@ body {
 
 .salir {
     position: absolute;
-    top: 10px; /* Mover a la parte superior */
-    right: 10px; /* Mover a la derecha */
+    bottom: 20px;
+    left: 20px;
     display: flex;
     align-items: center;
 }
 
 .cerrar-sesion {
     background: rgba(0, 0, 0, 0.8);
-    padding: 10px; /* Reducir el padding */
+    padding: 15px;
     border-radius: 10px;
-    width: auto; /* Ancho automático según el contenido */
+    width: 25vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -179,8 +179,8 @@ body {
     background: red;
     color: #ffff;
     text-decoration: none;
-    font-size: 16px; /* Reducir el tamaño de la fuente */
-    padding: 8px 16px; /* Ajustar el padding */
+    font-size: 18px;
+    padding: 10px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -189,12 +189,8 @@ body {
 }
 
 
-
 /* Fin cerrar sesion */
 
-a {
-    text-decoration: none !important;
-}
 
 /* video */
 
@@ -252,116 +248,39 @@ h2 {
     z-index: 3;
 }
 
-input {
+a {
+    text-decoration: none !important;
+}
 
+.cajita {
+    position: relative;
+    height: 100vh;
+    z-index: 2;
+}
+
+input {
+    width: 80%;
+    margin: 5px;
     padding: 15px;
     border: none;
     border-radius: 20px;
     text-align: center;
-
+    margin: 15px;
     color: black;
 }
 
-.login h1 {
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: #ffffff;
+.btn-submit {
+    background-color: #081a38;
+    width: 50%;
+    margin-top: 5px;
+    color: aliceblue;
 }
 
-.login form {
-    display: flex;
-    flex-direction: column;
-}
 
-.login label {
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #ffffff;
-}
-
-.login input {
-    margin-bottom: 12px;
-    padding: 10px;
-    border: 1px solid #ffffff;
-    border-radius: 17px;
-    font-size: 16px;
-}
-
-.login .btn-submit {
-    margin-top: 30px;
-    background-color: #007bff;
-    color: white;
-    padding: 8px 18px;
-    border: none;
-    border-radius: 17px;
-    font-size: 16px;
-    cursor: pointer;
-    font-size: 14px;
-
-}
-
-.login .btn-submit:hover {
-    background-color: #0056b3;
-}
-
-.login p {
-    margin-top: 15px;
-    font-size: 14px;
-    color: #ffffff;
-}
-
-.login p a {
-    color: #007bff;
-    text-decoration: none;
-}
-
-.login p a:hover {
-    text-decoration: underline;
-}
-
-.select2-container .select2-selection--single {
-    height: 38px;
-    border-radius: 5px;
-    background: rgba(255, 255, 255, 0.1);
-    border: none;
-    color: #fff;
-}
-
-.select2-container--default .select2-selection--single .select2-selection__rendered {
-    line-height: 38px;
-    color: #fff;
-}
-
-.select2-container--default .select2-selection--single .select2-selection__arrow {
-    height: 36px;
-}
-
-.select2-container--default .select2-results__option--highlighted {
-    background-color: #007bff;
-    color: #fff;
-}
-
-.select2-container--default .select2-results__option[aria-selected=true] {
-    background-color: #0056b3;
-    color: #fff;
-}
-
-.avatar-option {
-    display: flex;
-    align-items: center;
-}
-
-.avatar-option img {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    margin-right: 10px;
-}
+/* FIN SECCION DE LA CAJA DEL LOGIN */
 
 
 /* FIN AÑADIDO DE KAHO70 */
-
-
 
 
 /* SECCION RESPONSIVE */
@@ -396,38 +315,6 @@ input {
 }
 
 @media (max-width: 768px) {
-    .salir {
-        top: 10px;
-        right: 10px;
-    }
-
-    .cerrar-sesion {
-        padding: 8px;
-    }
-
-    .boton-salir {
-        font-size: 14px; 
-        padding: 6px 12px;
-    }
-}
-
-@media (max-width: 480px) {
-    .salir {
-        top: 10px;
-        right: 10px;
-    }
-
-    .cerrar-sesion {
-        padding: 6px;
-    }
-
-    .boton-salir {
-        font-size: 12px;
-        padding: 5px 10px;
-    }
-}
-
-@media (max-width: 768px) {
     .login {
         max-width: 80%;
     }
@@ -450,7 +337,6 @@ input {
         max-width: 35%;
     }
 }
-
 
 
 /* FIN SECCION RESPONSIVE */

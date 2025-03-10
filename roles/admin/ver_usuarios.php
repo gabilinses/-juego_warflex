@@ -61,45 +61,6 @@ use PHPMailer\PHPMailer\SMTP;
             background-color: rgb(142, 11, 11);
         }
 
-        @media (max-width: 768px) {
-    table, thead, tbody, th, td, tr {
-        display: block; /* Convertir la tabla en bloques */
-    }
-
-    thead tr {
-        position: absolute;
-        top: -9999px;
-        left: -9999px; /* Ocultar el header en móviles */
-    }
-
-    tr {
-        margin-bottom: 15px;
-        border: 1px solid #ddd;
-    }
-
-    td {
-        border: none;
-        border-bottom: 1px solid #eee;
-        position: relative;
-        padding-left: 50%; /* Espacio para el data-label */
-    }
-
-    td:before {
-        position: absolute;
-        left: 10px;
-        width: 45%;
-        padding-right: 10px;
-        white-space: nowrap;
-        content: attr(data-label); /* Mostrar el nombre de la columna */
-        font-weight: bold;
-    }
-
-    .botonGuardar, .borrar {
-        width: 100%;
-        margin-top: 5px;
-    }
-}
-
     </style>
 </head>
 <body>

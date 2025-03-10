@@ -4,7 +4,6 @@ require_once('../../database/conexion.php');
 $conex = new Database;
 $con = $conex->conectar();
 session_start();
-include '../../includes/validarSesion.php';
 
 if (!isset($_SESSION['username'])) {
     echo "Inicio de sesion invalida";
@@ -28,7 +27,6 @@ $nom_mundo = $fila['Nom_mundo'];
 $mundo = "../../img/mundos/".$fila['mfoto'];
 $_SESSION['Id_mundo'] = $fila['Id_mundo'];
 ?>
-
 
 
 

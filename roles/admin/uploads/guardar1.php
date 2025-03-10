@@ -1,7 +1,7 @@
 <?php
 // Configuración de la conexión a MySQL
 $host = 'localhost';
-$dbname = 'warflex';
+$dbname = 'warflex_2';
 $username = 'root'; 
 $password = ''; 
 
