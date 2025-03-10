@@ -1,0 +1,91 @@
+    body {
+        background-color: #1a1a1a;
+        color: white;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+    }
+    
+    .avatares-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    
+    .avatar-card {
+        background-color: #333;
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+        transition: transform 0.3s ease;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .avatar-card img {
+        width: 180px;
+        height: 180px;
+        border-radius: 0;
+        object-fit: contain;
+        transition: transform 0.3s ease;
+        background-color: transparent;
+        margin-bottom: 10px;
+    }
+    
+    .avatar-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .avatar-card img:hover {
+        transform: scale(1.1);
+    }
+    
+    @media (max-width: 768px) {
+        .avatar-card img {
+            width: 150px;
+            height: 150px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .avatar-card img {
+            width: 120px;
+            height: 120px;
+        }
+    }
+    
+    .seleccionar-btn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+        width: 100%;
+        max-width: 150px;
+        transition: background-color 0.3s ease;
+    }
+    
+    .seleccionar-btn:hover {
+        background-color: #45a049;
+    }
+    
+    .regresar {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        width: 50px;
+        cursor: pointer;
+        z-index: 1000;
+    }
+    
+    h1 {
+        text-align: center;
+        margin: 20px 0;
+    }
